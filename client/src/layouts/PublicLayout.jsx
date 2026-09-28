@@ -89,7 +89,18 @@ export default function PublicLayout() {
               </a>
             </p>
           )}
+
+            <p className="mt-2 space-x-4">
+            <Link className="underline" to="/privacy">
+              Privacy Policy
+            </Link>
+            <Link className="underline" to="/terms">
+              Terms of Service
+            </Link>
+          </p>
+
         </div>
+
       </footer>
     </div>
   );
