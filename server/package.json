@@ -9,7 +9,8 @@
     "lint": "eslint .",
     "test": "vitest run",
     "migrate": "dotenv -e .env -- db-migrate up --config database.json -e dev",
-    "migrate:down": "dotenv -e .env -- db-migrate down --config database.json -e dev"
+    "migrate:down": "dotenv -e .env -- db-migrate down --config database.json -e dev",
+    "seed": "node database/seed.js"
   },
   "dependencies": {
     "cors": "^2.8.6",
