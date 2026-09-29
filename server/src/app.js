@@ -3,6 +3,7 @@ import cors from 'cors';
 import helmet from 'helmet';
 import { env } from './config/env.js';
 import healthRoutes from './routes/health.routes.js';
+import menuRoutes from './routes/menu.routes.js';
 
 export function createApp() {
   const app = express();
@@ -17,6 +18,7 @@ export function createApp() {
   app.use(express.json({ limit: '100kb' }));
 
   app.use('/api/v1', healthRoutes);
+  app.use('/api/v1', menuRoutes);
 
   // 404 for unknown API routes
   app.use('/api', (req, res) => {
