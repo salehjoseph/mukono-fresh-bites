@@ -3,6 +3,8 @@ import { NavLink, Link, Outlet } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { BUSINESS } from '../constants/business';
 import { whatsappLink } from '../utils/whatsapp';
+import { ShoppingCart } from 'lucide-react';
+import { useCart } from '../store/cartContext';
 
 const links = [
   { to: '/', label: 'Home' },
@@ -22,6 +24,7 @@ function linkClass({ isActive }) {
 export default function PublicLayout() {
   const [open, setOpen] = useState(false);
   const wa = whatsappLink();
+  const { itemCount } = useCart();
   const navState = open ? 'block' : 'hidden';
 
   return (
@@ -70,6 +73,18 @@ export default function PublicLayout() {
               ))}
             </ul>
           </nav>
+          <Link
+            to="/cart"
+            className="relative inline-flex min-h-11 min-w-11 items-center justify-center"
+            aria-label={`Cart, ${itemCount} item${itemCount === 1 ? '' : 's'}`}
+          >
+            <ShoppingCart aria-hidden="true" />
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full bg-accent-700 text-xs font-bold text-white">
+                {itemCount}
+              </span>
+            )}
+          </Link>
         </div>
       </header>
 

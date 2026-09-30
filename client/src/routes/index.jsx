@@ -7,6 +7,7 @@ import Contact from '../pages/Contact';
 import NotFound from '../pages/NotFound';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
+import Cart from '../pages/Cart';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
       { path: '/menu', element: <Menu /> },
       { path: '/about', element: <About /> },
       { path: '/contact', element: <Contact /> },
+      { path: '/cart', element: <Cart /> },
       { path: '*', element: <NotFound /> },
       { path: '/privacy', element: <Privacy /> },
       { path: '/terms', element: <Terms /> },

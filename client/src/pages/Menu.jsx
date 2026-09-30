@@ -4,10 +4,13 @@ import Seo from '../components/Seo';
 import { useFetch } from '../hooks/useFetch';
 import { apiGet } from '../services/api';
 import { formatUGX } from '../utils/format';
+import { useCart } from '../store/cartContext';
+import Button from '../components/Button';
 
 export default function Menu() {
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState('');
+  const { addItem } = useCart();
 
   const { data: categories } = useFetch(() => apiGet('/categories'), []);
 
@@ -96,8 +99,16 @@ export default function Menu() {
                 <h2 className="font-semibold text-ink">{item.name}</h2>
                 <p className="mt-1 text-sm text-muted">{item.description}</p>
                 <p className="mt-2 font-bold text-brand-800">{formatUGX(item.price_ugx)}</p>
-                {!item.is_available && (
+                   {!item.is_available ? (
                   <p className="mt-1 text-sm font-medium text-accent-700">Currently unavailable</p>
+                ) : (
+                  <Button
+                    variant="outline"
+                    className="mt-3 w-full"
+                    onClick={() => addItem(item)}
+                  >
+                    Add to cart
+                  </Button>
                 )}
               </li>
             ))}
