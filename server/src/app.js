@@ -5,6 +5,7 @@ import { env } from './config/env.js';
 import healthRoutes from './routes/health.routes.js';
 import menuRoutes from './routes/menu.routes.js';
 import orderRoutes from './routes/order.routes.js';
+import deliveryZoneRoutes from './routes/deliveryZone.routes.js';
 
 export function createApp() {
   const app = express();
@@ -21,6 +22,7 @@ export function createApp() {
   app.use('/api/v1', healthRoutes);
   app.use('/api/v1', menuRoutes);
   app.use('/api/v1', orderRoutes);
+  app.use('/api/v1', deliveryZoneRoutes);
 
   // 404 for unknown API routes
   app.use('/api', (req, res) => {

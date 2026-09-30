@@ -8,6 +8,8 @@ import NotFound from '../pages/NotFound';
 import Privacy from '../pages/Privacy';
 import Terms from '../pages/Terms';
 import Cart from '../pages/Cart';
+import Checkout from '../pages/Checkout';
+import OrderConfirmation from '../pages/OrderConfirmation';
 
 export const router = createBrowserRouter([
   {
@@ -18,6 +20,8 @@ export const router = createBrowserRouter([
       { path: '/about', element: <About /> },
       { path: '/contact', element: <Contact /> },
       { path: '/cart', element: <Cart /> },
+      { path: '/checkout', element: <Checkout /> },
+      { path: '/order-confirmation', element: <OrderConfirmation /> },
       { path: '*', element: <NotFound /> },
       { path: '/privacy', element: <Privacy /> },
       { path: '/terms', element: <Terms /> },
