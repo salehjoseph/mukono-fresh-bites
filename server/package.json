@@ -10,14 +10,18 @@
     "test": "vitest run",
     "migrate": "dotenv -e .env -- db-migrate up --config database.json -e dev",
     "migrate:down": "dotenv -e .env -- db-migrate down --config database.json -e dev",
-    "seed": "node database/seed.js"
+    "seed": "node database/seed.js",
+    "create-admin": "node scripts/createAdmin.js"
   },
   "dependencies": {
+    "argon2": "^0.45.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "db-migrate": "^0.11.14",
     "db-migrate-mysql": "^3.0.0",
     "dotenv": "^18.0.4",
     "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
     "helmet": "^8.3.0",
     "mysql2": "^3.24.4"
   },
@@ -27,6 +31,7 @@
     "eslint": "^10.11.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.12.0",
+    "prompts": "^2.4.2",
     "vitest": "^5.0.2"
   }
 }
