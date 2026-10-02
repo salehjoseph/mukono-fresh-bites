@@ -1,6 +1,7 @@
 import { pool } from '../config/db.js';
 import * as orderRepo from '../repositories/order.repository.js';
 import { generateOrderNumber } from '../utils/orderNumber.js';
+import { canTransition, getAllowedNextStatuses } from './orderStatus.service.js';
 
 export async function createOrder(input) {
   const existing = await orderRepo.findOrderByIdempotencyKey(input.idempotencyKey);
@@ -94,4 +95,46 @@ export async function createOrder(input) {
   } finally {
     connection.release();
   }
+}
+
+export async function listOrders(filters) {
+  return orderRepo.findAllOrders(filters);
+}
+
+export async function getOrderById(id) {
+  const order = await orderRepo.findOrderById(id);
+  if (!order) {
+    const err = new Error('Order not found.');
+    err.status = 404;
+    err.code = 'NOT_FOUND';
+    throw err;
+  }
+  return { ...order, allowedNextStatuses: getAllowedNextStatuses(order.status, order.order_type) };
+}
+
+export async function changeOrderStatus(id, toStatus) {
+  const order = await orderRepo.findOrderById(id);
+  if (!order) {
+    const err = new Error('Order not found.');
+    err.status = 404;
+    err.code = 'NOT_FOUND';
+    throw err;
+  }
+
+  if (!canTransition(order.status, toStatus)) {
+    const err = new Error(`Cannot move an order from ${order.status} to ${toStatus}.`);
+    err.status = 400;
+    err.code = 'INVALID_TRANSITION';
+    throw err;
+  }
+
+  const success = await orderRepo.updateOrderStatus(id, order.status, toStatus);
+  if (!success) {
+    const err = new Error('This order was already updated by someone else. Please refresh.');
+    err.status = 409;
+    err.code = 'CONFLICT';
+    throw err;
+  }
+
+  return { orderNumber: order.order_number, status: toStatus };
 }
