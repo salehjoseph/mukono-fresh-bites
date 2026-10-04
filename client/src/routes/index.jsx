@@ -16,6 +16,9 @@ import AdminLogin from '../pages/admin/AdminLogin';
 import AdminDashboard from '../pages/admin/AdminDashboard';
 import AdminOrders from '../pages/admin/AdminOrders';
 import AdminOrderDetail from '../pages/admin/AdminOrderDetail';
+import AdminCategories from '../pages/admin/AdminCategories';
+import AdminMenuItems from '../pages/admin/AdminMenuItems';
+import AdminMenuItemForm from '../pages/admin/AdminMenuItemForm';
 
 export const router = createBrowserRouter([
   {
@@ -42,6 +45,10 @@ export const router = createBrowserRouter([
           { path: '/admin', element: <AdminDashboard /> },
           { path: '/admin/orders', element: <AdminOrders /> },
           { path: '/admin/orders/:id', element: <AdminOrderDetail /> },
+          { path: '/admin/categories', element: <AdminCategories /> },
+          { path: '/admin/menu-items', element: <AdminMenuItems /> },
+          { path: '/admin/menu-items/new', element: <AdminMenuItemForm /> },
+          { path: '/admin/menu-items/:id', element: <AdminMenuItemForm /> },
         ],
       },
     ],

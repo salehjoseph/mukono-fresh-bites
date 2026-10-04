@@ -30,7 +30,16 @@ export function createApp() {
   app.use('/api/v1', deliveryZoneRoutes);
   app.use('/api/v1', authRoutes);
   app.use('/api/v1', adminRoutes);
-  app.use('/uploads', express.static('uploads'));
+  app.use(
+  '/uploads',
+  express.static('uploads', {
+    setHeaders: (res) => {
+      // Images here are meant to be publicly embeddable (menu photos shown in the React app
+      // on a different origin/port), so we deliberately relax this one header for this folder only.
+      res.set('Cross-Origin-Resource-Policy', 'cross-origin');
+    },
+  }),
+);
 
   // 404 for unknown API routes
   app.use('/api', (req, res) => {

@@ -44,3 +44,32 @@ export async function apiPatch(path, payload) {
   }
   return body.data;
 }
+
+
+export async function apiDelete(path) {
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: 'DELETE',
+    credentials: 'include',
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok || !body?.success) {
+    throw new Error(body?.error?.message || 'Something went wrong. Please try again.');
+  }
+  return body.data;
+}
+
+export async function apiUpload(path, file) {
+  const formData = new FormData();
+  formData.append('image', file);
+
+  const res = await fetch(`${BASE_URL}${path}`, {
+    method: 'POST',
+    credentials: 'include',
+    body: formData, // no Content-Type header — the browser sets the multipart boundary itself
+  });
+  const body = await res.json().catch(() => null);
+  if (!res.ok || !body?.success) {
+    throw new Error(body?.error?.message || 'Something went wrong. Please try again.');
+  }
+  return body.data;
+}
