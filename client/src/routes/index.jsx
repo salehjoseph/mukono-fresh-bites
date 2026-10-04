@@ -14,6 +14,8 @@ import OrderConfirmation from '../pages/OrderConfirmation';
 import NotFound from '../pages/NotFound';
 import AdminLogin from '../pages/admin/AdminLogin';
 import AdminDashboard from '../pages/admin/AdminDashboard';
+import AdminOrders from '../pages/admin/AdminOrders';
+import AdminOrderDetail from '../pages/admin/AdminOrderDetail';
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +38,11 @@ export const router = createBrowserRouter([
     children: [
       {
         element: <AdminLayout />,
-        children: [{ path: '/admin', element: <AdminDashboard /> }],
+        children: [
+          { path: '/admin', element: <AdminDashboard /> },
+          { path: '/admin/orders', element: <AdminOrders /> },
+          { path: '/admin/orders/:id', element: <AdminOrderDetail /> },
+        ],
       },
     ],
   },

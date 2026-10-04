@@ -10,6 +10,7 @@ import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import adminRoutes from './routes/admin.routes.js';
 
+
 export function createApp() {
   const app = express();
 
@@ -29,6 +30,7 @@ export function createApp() {
   app.use('/api/v1', deliveryZoneRoutes);
   app.use('/api/v1', authRoutes);
   app.use('/api/v1', adminRoutes);
+  app.use('/uploads', express.static('uploads'));
 
   // 404 for unknown API routes
   app.use('/api', (req, res) => {
