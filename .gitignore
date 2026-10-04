@@ -6,3 +6,5 @@ dist
 *.log
 .DS_Store
 uploads/
+server/cookies.txt
+server/fake.txt
