@@ -30,3 +30,13 @@ export const uploadMenuItemImage = multer({
   fileFilter,
   limits: { fileSize: MAX_SIZE_BYTES, files: 1 },
 }).single('image');
+
+export function handleUploadError(err, req, res, next) {
+  if (err) {
+    return res.status(400).json({
+      success: false,
+      error: { code: 'INVALID_FILE', message: err.message },
+    });
+  }
+  next();
+}

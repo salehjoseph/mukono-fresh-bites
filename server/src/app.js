@@ -9,12 +9,24 @@ import deliveryZoneRoutes from './routes/deliveryZone.routes.js';
 import cookieParser from 'cookie-parser';
 import authRoutes from './routes/auth.routes.js';
 import adminRoutes from './routes/admin.routes.js';
+import rateLimit from 'express-rate-limit';
 
 
 export function createApp() {
   const app = express();
 
-  app.use(helmet());
+  app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: ["'self'", 'data:', 'http://localhost:4000'],
+        scriptSrc: ["'self'"],
+        styleSrc: ["'self'", "'unsafe-inline'"],
+      },
+    },
+  }),
+);
   app.use(
     cors({
       origin: env.clientUrl,
@@ -23,6 +35,13 @@ export function createApp() {
   );
   app.use(express.json({ limit: '100kb' }));
   app.use(cookieParser());
+  const generalLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 300, // generous — this is anti-abuse, not a normal-use restriction
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+app.use('/api', generalLimiter);
 
   app.use('/api/v1', healthRoutes);
   app.use('/api/v1', menuRoutes);

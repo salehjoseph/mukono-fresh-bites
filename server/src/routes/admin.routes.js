@@ -3,7 +3,7 @@ import { requireAuth, requireRole } from '../middleware/auth.middleware.js';
 import { listOrdersAdmin, getOrderAdmin, updateOrderStatusAdmin } from '../controllers/order.controller.js';
 import * as categoryAdmin from '../controllers/categoryAdmin.controller.js';
 import * as menuItemAdmin from '../controllers/menuItemAdmin.controller.js';
-import { uploadMenuItemImage } from '../middleware/upload.middleware.js';
+import { uploadMenuItemImage, handleUploadError } from '../middleware/upload.middleware.js';
 
 const router = Router();
 
@@ -33,6 +33,16 @@ router.post(
   requireAuth,
   requireRole('ADMIN'),
   uploadMenuItemImage,
+  menuItemAdmin.uploadImage,
+);
+
+router.post(
+  '/admin/menu-items/:id/image',
+  requireAuth,
+  requireRole('ADMIN'),
+  (req, res, next) => {
+    uploadMenuItemImage(req, res, (err) => handleUploadError(err, req, res, next));
+  },
   menuItemAdmin.uploadImage,
 );
 
