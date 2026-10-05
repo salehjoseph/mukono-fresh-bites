@@ -1,7 +1,7 @@
 # Mukono Fresh Bites
 
 Restaurant ordering platform for Mukono, Uganda. Work in progress (Phase 1: foundation).
-
+This restaurant doesn't exist please this is a real world project for keeping me busy.
 ## Development
 
     npm install
